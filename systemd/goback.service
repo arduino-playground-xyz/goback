@@ -3,7 +3,9 @@
 
 [Unit]
 Description=goback server
-After=network.target
+After=docker.service
+BindsTo=docker.service
+ReloadPropagatedFrom=docker.service
 
 [Service]
 Type=simple
