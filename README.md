@@ -23,6 +23,3 @@ or
 go build cmd/server/main.go 
 ./main config/config-test.json
 ```
-## Database schema
-
-![image](https://user-images.githubusercontent.com/12186457/118371052-64cf1b00-b5b3-11eb-9449-8b6f3bd6b59c.png)
