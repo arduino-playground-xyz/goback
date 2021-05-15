@@ -1,0 +1,85 @@
+@startuml
+hide circle
+
+title Terentiy - Database schema
+
+class board {
+  +INT id
+  +VARHCAR secure_id
+  +VARCHAR alias
+  +ENUM type
+  UNIQUE() INDEX ON secure_id ASC
+}
+
+class incubator {
+  +INT id
+  +INT board_id
+  +TINYINY is_active
+  +VARCHAR alias
+  +INT measurement_interval
+}
+
+class output_device_model {
+  +INT id
+  +ENUM type
+  +VARCHAR model
+}
+
+class output_device {
+  +INT id
+  +INT incubator_id
+  +INT device_model_id
+  +VARCHAR pin
+  +VARCHAR meta
+}
+
+class input_device_model {
+  +INT id
+  +ENUM type
+  +VARCHAR model
+}
+
+class input_device {
+  +INT id
+  +INT incubator_id
+  +INT device_model_id
+  +VARCHAR pin
+  +VARCHAR meta
+}
+
+class decision {
+  +INT id
+  +ENUM type
+  +INT incubator_id
+  +INT output_device_id null
+}
+
+class action {
+  +INT id
+  +INT decision_id
+  +TIMESTAMP created
+  +INT duration
+  +INT value
+  +VARCHAR reason
+  +VARCHAR timeseries_query
+}
+
+class action_state {
+  +INT action_id
+  +TIMESTAMP started null
+  +TIMESTAMP finished null
+}
+
+
+board "1" *-up- "many" incubator
+action "1" *-up- "0..1" action_state
+input_device_model "1" *-up- "many" input_device
+output_device_model "1" *-up- "many" output_device
+decision "1" *-up- "many" action
+incubator "1" *-up- "many" decision
+incubator "1" *-up- "many" input_device
+incubator "1" *-up- "many" output_device
+
+
+
+@enduml
